@@ -1,0 +1,25 @@
+import pandas as pd
+import plotly.express as px
+
+# Substitua pelo caminho correto da sua planilha
+file_path = '/content/incident (53) (1).xlsx'
+data = pd.read_excel(file_path, sheet_name='Page 1')
+
+# Carregar a planilha
+data = pd.read_excel(file_path, sheet_name='Page 1')
+
+# Agrupar dados por empresa e contar a quantidade de chamados
+calls_per_company = data.groupby('Customer (Company)').size().reset_index(name='Call Count')
+
+fig = px.bar(calls_per_company,
+             x='Customer (Company)',
+             y='Call Count',
+             title='Quantidade de Chamados por Empresa',
+             labels={'Customer (Company)': 'Empresa', 'Call Count': 'Quantidade de Chamados'},
+             text='Call Count')
+
+# Ajustar layout para melhor visualização
+fig.update_layout(xaxis={'categoryorder': 'total descending'},
+                  xaxis_title="Empresas",
+                  yaxis_title="Quantidade de Chamados",
+                  template="plotly_white")
